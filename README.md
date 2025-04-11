@@ -69,18 +69,34 @@ Advantages of this approach:
 - Early participants get better prices
 - Fair token distribution based on contribution amount
 
-## 🚀 Installation
+## 🚀 Installation & Setup
+
+This project is designed to work with [Remix IDE](https://remix.ethereum.org/), making it accessible without local development environment setup.
+
+### Using Remix (Recommended):
+1. Visit [Remix IDE](https://remix.ethereum.org/)
+2. Create a new workspace
+3. Create new files for each contract (FundraisingToken.sol and LaunchpadFactory.sol)
+4. Copy and paste the contract code
+5. Select Solidity compiler version 0.8.20
+6. Compile the contracts
+
+### Alternative Local Setup:
+
+If you prefer a local development environment:
 
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/bancor-launchpad.git
 cd bancor-launchpad
 
-# Install dependencies
+# For Hardhat
 npm install
-
-# Compile contracts
 npx hardhat compile
+
+# For Foundry
+forge install
+forge build
 ```
 
 ## 💻 Usage
@@ -132,13 +148,37 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 🧪 Testing
 
+### Remix Testing:
+This project is optimized for testing with Remix IDE's built-in tools:
+
+1. **Remix VM (Blockchain)**: 
+   - Deploy contracts to the JavaScript VM environment
+   - Test functions directly through the Remix interface
+   - Experiment with different accounts and parameters
+
+2. **Remix Debugger**:
+   - Execute transactions and debug them step-by-step
+   - Inspect state changes and variable values
+   - Identify issues with execution flow
+
+### Advanced Testing Options:
+
+For more comprehensive testing:
+
 ```bash
-# Run all tests
+# Foundry (Mainnet Fork Testing)
+forge test --fork-url https://eth-mainnet.g.alchemy.com/v2/YOUR_API_KEY
+
+# Hardhat Local Testing
 npx hardhat test
 
-# Run specific test file
-npx hardhat test test/FundraisingToken.test.js
+# Hardhat Mainnet Fork
+npx hardhat test --network hardhat-fork
 ```
+
+### Manual Testnet Deployment:
+The contracts are verified on Sepolia testnet and can be tested with real transactions using tools like Metamask and Etherscan.
+
 
 ## 📄 License
 
