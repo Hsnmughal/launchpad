@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Solidity](https://img.shields.io/badge/Solidity-0.8.20-blue)](https://soliditylang.org/)
-[![Uniswap](https://img.shields.io/badge/Uniswap-V2-ff69b4)](https://uniswap.org/)
+[![Foundry](https://img.shields.io/badge/Foundry-0.2.0-orange)](https://getfoundry.sh/)
 
 A decentralized fundraising platform that leverages Bancor bonding curve mechanics to incentivize early participants, while providing automatic liquidity provisioning on completion.
 
@@ -71,39 +71,56 @@ Advantages of this approach:
 
 ## 🚀 Installation & Setup
 
-This project is designed to work with [Remix IDE](https://remix.ethereum.org/), making it accessible without local development environment setup.
+### Prerequisites
 
-### Using Remix (Recommended):
-1. Visit [Remix IDE](https://remix.ethereum.org/)
-2. Create a new workspace
-3. Create new files for each contract (FundraisingToken.sol and LaunchpadFactory.sol)
-4. Copy and paste the contract code
-5. Select Solidity compiler version 0.8.20
-6. Compile the contracts
+- [Foundry](https://getfoundry.sh/) (version 0.2.0 or later)
+- [Git](https://git-scm.com/)
 
-### Alternative Local Setup:
+### Installation
 
-If you prefer a local development environment:
-
+1. Clone the repository:
 ```bash
-# Clone the repository
 git clone https://github.com/yourusername/bancor-launchpad.git
 cd bancor-launchpad
+```
 
-# For Hardhat
-npm install
-npx hardhat compile
-
-# For Foundry
+2. Install dependencies:
+```bash
 forge install
+```
+
+3. Build the project:
+```bash
 forge build
 ```
+
+### Project Structure
+
+```
+.
+├── src/                    # Source files
+├── test/                   # Test files
+├── script/                 # Deployment scripts
+├── lib/                    # Dependencies
+├── foundry.toml           # Foundry configuration
+└── remappings.txt         # Solidity import remappings
+```
+
+### Dependencies
+
+The project uses the following main dependencies:
+- OpenZeppelin Contracts
+- OpenZeppelin Contracts Upgradeable
+- Uniswap V2 & V3 Core and Periphery
+- Uniswap V4 Core and Periphery
+- Solmate
+- Forge Standard Library
 
 ## 💻 Usage
 
 ### Creating a new launchpad:
 
-```javascript
+```solidity
 // Create a new fundraising token
 const tokenAddress = await launchpadFactory.createLaunchpad(
   "My Token",             // Token name
@@ -115,7 +132,7 @@ const tokenAddress = await launchpadFactory.createLaunchpad(
 
 ### Participating in a fundraise:
 
-```javascript
+```solidity
 // Approve USDC spending
 await usdc.approve(tokenAddress, ethers.utils.parseUnits("1000", 6));
 
@@ -125,16 +142,42 @@ await token.buyTokens(ethers.utils.parseUnits("1000", 6));
 
 ### Finalizing fundraising:
 
-```javascript
+```solidity
 // Can only be called by creator after funding complete
 await token.finalizeFundraising();
 ```
 
-## 🌐 Deployed Contracts
+## 🧪 Testing
 
-**Sepolia Testnet**:
-- **Mock USDC**: [0x398782BE945DD3E7a016717cDE76Ec3Cf8638e8E](https://sepolia.etherscan.io/address/0x398782BE945DD3E7a016717cDE76Ec3Cf8638e8E#code)
-- **Launchpad Factory**: [0xAe67CB3437E76bF06D49a7A1807AfE6AB47D74DC](https://sepolia.etherscan.io/address/0xAe67CB3437E76bF06D49a7A1807AfE6AB47D74DC#code)
+### Running Tests
+
+```bash
+# Run all tests
+forge test
+
+# Run tests with detailed gas reports
+forge test --gas-report
+
+# Run specific test file
+forge test --match-path test/FundraisingToken.t.sol
+
+# Run tests with debug traces
+forge test -vvv
+```
+
+### Coverage
+
+```bash
+# Generate coverage report
+forge coverage
+```
+
+### Fork Testing
+
+```bash
+# Run tests on a forked mainnet
+forge test --fork-url $RPC_URL
+```
 
 ## 🤝 Contributing
 
@@ -145,40 +188,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
-## 🧪 Testing
-
-### Remix Testing:
-This project is optimized for testing with Remix IDE's built-in tools:
-
-1. **Remix VM (Blockchain)**: 
-   - Deploy contracts to the JavaScript VM environment
-   - Test functions directly through the Remix interface
-   - Experiment with different accounts and parameters
-
-2. **Remix Debugger**:
-   - Execute transactions and debug them step-by-step
-   - Inspect state changes and variable values
-   - Identify issues with execution flow
-
-### Advanced Testing Options:
-
-For more comprehensive testing:
-
-```bash
-# Foundry (Mainnet Fork Testing)
-forge test --fork-url https://eth-mainnet.g.alchemy.com/v2/YOUR_API_KEY
-
-# Hardhat Local Testing
-npx hardhat test
-
-# Hardhat Mainnet Fork
-npx hardhat test --network hardhat-fork
-```
-
-### Manual Testnet Deployment:
-The contracts are verified on Sepolia testnet and can be tested with real transactions using tools like Metamask and Etherscan.
-
 
 ## 📄 License
 
